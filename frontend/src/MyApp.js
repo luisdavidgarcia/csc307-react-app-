@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Table from './Table';
 import Form from './Form';
+import axios from 'axios';
 
 function MyApp() {
 
@@ -29,6 +30,13 @@ function MyApp() {
       return false;
     }
   }
+
+  useEffect(() => {
+    fetchAll().then( result => {
+      if (result)
+        setCharacters(result);
+    });
+  }, [] );
 
   return (
     <div className="container">
