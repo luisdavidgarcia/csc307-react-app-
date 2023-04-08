@@ -16,7 +16,10 @@ function MyApp() {
   }
 
   function updateList(person) {
-    setCharacters([...characters, person]);
+    makePostCall(person).then( result => {
+      if (result && result.status == 200)
+        setCharacters([...characters, person]);
+    });
   }
 
   async function fetchAll() {
@@ -29,6 +32,15 @@ function MyApp() {
       console.log(error);
       return false;
     }
+  }
+
+  async function makePostCall(person) {
+    const response = await axios.post('http://localhost:500/users', person);
+    return response;
+  }
+  catch (error) {
+    console.log(error);
+    return false;
   }
 
   useEffect(() => {
