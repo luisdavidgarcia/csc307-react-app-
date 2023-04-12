@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const port = 8000;
-const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
 
 const users = {
@@ -13,26 +12,11 @@ const users = {
 
 app.use(cors());
 app.use(express.json());
-app.use(cors());
 
 app.get('/', (req, res) => {
 	res.send(users);
 });
 
-/*
-// action to find user by name
-app.get('/users', (req,res) => {
-	const name = req.query.name;
-	if (name != undefined) {
-		let result = findUserByName(name);
-		result = {users_list: result};
-		res.send(result);
-	}
-	else {
-		res.send(users);
-	}
-});
-*/
 
 // action to find user by name and job
 app.get('/users', (req, res) => {
@@ -40,6 +24,11 @@ app.get('/users', (req, res) => {
 	const job = req.query.job;
 	if (name != undefined && job != undefined) {
 		let result = findUserByNameAndJob(name, job);
+		result = {users_list: result};
+		res.send(result);
+	}
+	else if (name != undefined) {
+		let result = findUserByName(name);
 		result = {users_list: result};
 		res.send(result);
 	}
