@@ -43,7 +43,7 @@ function MyApp() {
     try {
       console.log("Delete Call");
       console.log(id);
-      const response = await axios.delete(`http://localhost:8000/users/${id}`);
+      axios.delete(`http://localhost:8000/users/${id}`);
     }
     catch (error) {
       console.log(error);
