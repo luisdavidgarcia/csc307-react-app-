@@ -18,7 +18,10 @@ function MyApp() {
   function updateList(person) {
    makePostCall(person).then( result => {
    if (result && result.status === 201)
-      setCharacters([...characters, person] );
+     {
+      const newUserData = result.data; // get ID too
+      setCharacters([...characters, newUserData] );
+     }
    });
   }
 

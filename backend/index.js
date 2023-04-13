@@ -68,9 +68,10 @@ function giveUserID(user) {
 
 app.post('/users', (req, res) => {
 	const userToAdd = req.body;
-	giveUserID(userToAdd);
-	addUser(userToAdd);
-	res.status(201).end();
+	userToAdd.id = uuidv4();
+	//addUser(userToAdd);
+	users['users_list'].push(userToAdd);
+	res.status(201).send(userToAdd);
 });
 
 function addUser(user) {
