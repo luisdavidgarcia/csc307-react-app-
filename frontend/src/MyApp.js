@@ -11,8 +11,22 @@ function MyApp() {
   function removeOneCharacter (index) {
     const updated = characters.filter((character, i) => {
         return i !== index
-      });
-      setCharacters(updated);
+    });
+    setCharacters(updated);
+    const userToDelete = characters.filter((character, i) => {
+        return i === index
+    })
+    makeDeleteCall(userToDelete[0].id);
+    //.then( result => {
+    //  if (result.status === 204)
+     // {
+    //    const updated = characters.filter((character, i) => {
+    //      return i !== index
+    //    });
+    //    setCharacters(updated);
+     // }
+
+    //} ); //delete users on backend
   }
 
   function updateList(person) {
@@ -23,6 +37,18 @@ function MyApp() {
       setCharacters([...characters, newUserData] );
      }
    });
+  }
+
+  async function makeDeleteCall(id){
+    try {
+      console.log("Delete Call");
+      console.log(id);
+      const response = await axios.delete(`http://localhost:8000/users/${id}`);
+    }
+    catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 
   async function fetchAll() {
