@@ -49,17 +49,13 @@ app.get('/users/:id', (req,res) => {
 	const id = req.params['id']; //or req.params.id
 	let result = findUserById(id);
 	if (result === undefined || result.length == 0)
-		res.status(404).send('Resource not found.');
+		res.status(404).send('Resource not found.').end();
 	else {
 		result = {users_list: result};
-		res.send(result);
+		res.send(result).end();
 	}
 })
 
-function findUserById(id) {
-	return users['users_list'].find( (user) => user['id'] === id ); // or line below
-	//return users['users_list'].filter( (user) => user['id'] === id );
-}
 
 function giveUserID(user) {
 	const unique_id = uuidv4();
@@ -80,14 +76,20 @@ function addUser(user) {
 // New Delete User by ID feature 
 app.delete('/users/:id', (req, res) => {
 	const id = req.params['id'];
-	let result = deleteUserById(id);
-	if (result === undefined || result.length == 0)
-		res.status(404).send('Resource not found.');
+	let user_exists = findUserById(id);
+	if (user_exists === undefined || user_exists === 0)
+		res.status(404).send('Resource not found.').end();
 	else {
+		let result = deleteUserById(id);
 		result = {users_list: result};
-		res.status(204);
+		res.status(204).end();
 	}
 });
+
+function findUserById(id) {
+	return users['users_list'].find( (user) => user['id'] === id ); // or line below
+	//return users['users_list'].filter( (user) => user['id'] === id );
+}
 
 function deleteUserById(id) {
 	users['users_list'] = users['users_list'].filter( (user) => user.id != id );
