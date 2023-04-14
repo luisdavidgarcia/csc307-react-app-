@@ -9,24 +9,14 @@ function MyApp() {
   const [characters, setCharacters] = useState([]);
 
   function removeOneCharacter (index) {
-    const updated = characters.filter((character, i) => {
-        return i !== index
-    });
-    setCharacters(updated);
     const userToDelete = characters.filter((character, i) => {
         return i === index
     })
     makeDeleteCall(userToDelete[0].id);
-    //.then( result => {
-    //  if (result.status === 204)
-     // {
-    //    const updated = characters.filter((character, i) => {
-    //      return i !== index
-    //    });
-    //    setCharacters(updated);
-     // }
-
-    //} ); //delete users on backend
+    const updated = characters.filter((character, i) => {
+        return i !== index
+    });
+    setCharacters(updated);
   }
 
   function updateList(person) {
